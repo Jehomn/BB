@@ -1,0 +1,217 @@
+[
+  {
+    "pmid": "38924633",
+    "title": "2024 RECOVER Guidelines: Advanced Life Support. Evidence and knowledge gap analysis with treatment recommendations for small animal CPR.",
+    "authors": [
+      "Wolf Jacob",
+      "Buckley Gareth J",
+      "Rozanski Elizabeth A",
+      "Fletcher Daniel J",
+      "Boller Manuel",
+      "Burkitt-Creedon Jamie M",
+      "Weigand Kelly A",
+      "Crews Molly",
+      "Fausak Erik D"
+    ],
+    "journal": "Journal of veterinary emergency and critical care (San Antonio, Tex. : 2001)",
+    "year": "2024",
+    "doi": "10.1111/vec.13389",
+    "access_status": "abstract_only",
+    "access_source": "Europe PMC",
+    "abstract": "OBJECTIVE: To systematically review the evidence and devise clinical recommendations on advanced life support (ALS) in dogs and cats and to identify critical knowledge gaps.\nDESIGN: Standardized, systematic evaluation of literature pertinent to ALS following Grading of Recommendations, Assessment, Development, and Evaluation (GRADE) methodology. Prioritized questions were each reviewed by Evidence Evaluators, and findings were reconciled by ALS Domain Chairs and Reassessment Campaign on Veterinary Resuscitation (RECOVER) Co-Chairs to arrive at treatment recommendations commensurate to quality of evidence, risk:benefit relationship, and clinical feasibility. This process was implemented using an Evidence Profile Worksheet for each question that included an introduction, consensus on science, treatment recommendations, justification for these recommendations, and important knowledge gaps. A draft of these worksheets was distributed to veterinary professionals for comment for 4 weeks prior to finalization.\nSETTING: Transdisciplinary, international collaboration in university, specialty, and emergency practice.\nRESULTS: Seventeen questions pertaining to vascular access, vasopressors in shockable and nonshockable rhythms, anticholinergics, defibrillation, antiarrhythmics, and adjunct drug therapy as well as open-chest CPR were reviewed. Of the 33 treatment recommendations formulated, 6 recommendations addressed the management of patients with nonshockable arrest rhythms, 10 addressed shockable rhythms, and 6 provided guidance on open-chest CPR. We recommend against high-dose epinephrine even after prolonged CPR and suggest that atropine, when indicated, is used only once. In animals with a shockable rhythm in which initial defibrillation was unsuccessful, we recommend doubling the defibrillator dose once and suggest vasopressin (or epinephrine if vasopressin is not available), esmolol, lidocaine in dogs, and/or amiodarone in cats.\nCONCLUSIONS: These updated RECOVER ALS guidelines clarify the approach to refractory shockable rhythms and prolonged CPR. Very low quality of evidence due to absence of clinical data in dogs and cats continues to compromise the certainty with which recommendations can be made.",
+    "pub_types": [
+      "Journal Article",
+      "Practice Guideline"
+    ],
+    "mesh_terms": [
+      "Animals",
+      "Dogs",
+      "Cats",
+      "Dog Diseases",
+      "Cardiopulmonary Resuscitation",
+      "Cat Diseases",
+      "Veterinary Medicine",
+      "Heart Arrest"
+    ],
+    "full_text_sections": null
+  },
+  {
+    "pmid": "40848537",
+    "title": "Clinical utility of pharmacological defibrillation using cardioplegic solution during canine mitral valve repair.",
+    "authors": [
+      "Kurogochi K",
+      "Nii Y",
+      "Chen A",
+      "Uechi M"
+    ],
+    "journal": "Journal of veterinary cardiology : the official journal of the European Society of Veterinary Cardiology",
+    "year": "2025",
+    "doi": "10.1016/j.jvc.2025.07.002",
+    "access_status": "abstract_only",
+    "access_source": "Europe PMC",
+    "abstract": "INTRODUCTION/OBJECTIVES: Reperfusion ventricular fibrillation (VF) commonly occurs during open-heart surgery in dogs and humans. Pharmacological defibrillation using cardioplegia is a potential option; however, the standard technique remains unclear in dogs. We examined the clinical utility of pharmacological defibrillation in canine mitral valve repair.\nANIMALS, MATERIALS, AND METHODS: We retrospectively investigated 402 client-owned dogs that underwent mitral valve repair between January and December 2021.\nRESULTS: Ventricular fibrillation after cross-clamp release occurred in 70 of 397 cases (17.6%). Pharmacological defibrillation was attempted in 69 patients by administering 40 mEq/L potassium crystalloid cardioplegia via an aortic root catheter. If defibrillation was not achieved or VF recurred, the administration was repeated identically. In all cases, VF resolved after pharmacological defibrillation alone, without electrical defibrillation. Defibrillation was achieved with a single dose in 45 cases (median, 3.90 mL/kg; interquartile range [IQR], 2.95-4.95]), while multiple doses (range: 2-5) were necessary for 24 cases (median initial dose, 3.05 mL/kg [IQR, 2.07-4.14]). Predictors of reperfusion VF included body temperature at cross-clamp release (risk ratio, 0.82 per 1.0 °C) and pre-operative left ventricular internal dimension at end-diastole normalized to body weight (risk ratio, 1.11 per 0.1 unit).\nSTUDY LIMITATIONS: The retrospective nature of the study led to variability in personnel, absence of a control group, and limited data availability.\nCONCLUSIONS: Reperfusion VF occurred in 17.6% of the canine mitral valve repair cases. Pharmacological defibrillation is a feasible option in such cases. Approximately 4.0 mL/kg of cardioplegia was effective for a single dose, whereas lower doses required multiple administrations.",
+    "pub_types": [
+      "Journal Article"
+    ],
+    "mesh_terms": [
+      "Dogs",
+      "Animals",
+      "Retrospective Studies",
+      "Female",
+      "Male",
+      "Cardioplegic Solutions",
+      "Dog Diseases",
+      "Mitral Valve",
+      "Ventricular Fibrillation",
+      "Heart Arrest, Induced",
+      "Mitral Valve Insufficiency",
+      "Electric Countershock"
+    ],
+    "full_text_sections": null
+  },
+  {
+    "pmid": "40948617",
+    "title": "Comparison of etiology and outcome of dogs undergoing cardiopulmonary resuscitation with different conformation: the Shepherd versus the Bulldog.",
+    "authors": [
+      "Ossman Junes E",
+      "Rozanski Elizabeth A",
+      "DeStefano Ian M",
+      "Mandryk Deirdre Givens",
+      "Berlin Noa",
+      "Hoehne Sabrina N",
+      "Silverstein Deborah C",
+      "Balakrishnan Anusha"
+    ],
+    "journal": "Frontiers in veterinary science",
+    "year": "2025",
+    "doi": "10.3389/fvets.2025.1631569",
+    "access_status": "abstract_only",
+    "access_source": "Europe PMC (has PDF)",
+    "abstract": "OBJECTIVE: To investigate whether chest and head conformation in dogs is associated with the etiology of cardiopulmonary arrest (CPA) and likelihood to experience sustained return of spontaneous circulation (sROSC) following cardiopulmonary resuscitation (CPR).\nDESIGN: Retrospective study from the years 2000 and 2023 of dogs that underwent CPR that were one of two body types: either mesocephalic (Shepherd) or brachycephalic (Bulldog).\nSETTING: Electronic medical records from one veterinary record system and from the Reassessment Campaign on Veterinary Resuscitation (RECOVER) CPR Registry were reviewed.\nANIMALS: A total of 162 dogs were included: 72 in the mesocephalic group (MC) and 90 Bulldogs in the brachycephalic group (BC).\nMEASUREMENTS AND MAIN RESULTS: Data recorded included signalment, body weight, disease category, whether CPA occurred during general anesthesia, suspected cause of CPA, first identified rhythm on electrocardiogram during CPA, whether defibrillation was performed, whether open chest CPR was performed, whether ROSC was achieved and if it was sustained, and survival to discharge. The BC dogs were more likely to arrest associated with respiratory disease (p < 0.001), and MC dogs were more likely to arrest associated with cavity bleeding (p = 0.012), trauma (p = 0.012), or gastric-dilatation-volvulus (p < 0.001). The MC dogs were more frequently defibrillated (p = 0.021). Return of spontaneous circulation was achieved in 34.7% (25/72) of MC dogs and 30.0% (27/90) of BC dogs (p = 0.522). Survival to discharge was similarly dismal between the two groups (p = 0.434) with 2/72 (2.8%) of MC dogs and 1/90 (1.1%) of BC dogs, which reflected both re-arrest and owner decisions. When out-of-hospital CPA cases were excluded, MC dogs were more likely to suffer from a surgical condition (p = 0.017) and experienced ventricular fibrillation more often (p = 0.032).\nCONCLUSION: Dogs with different head and chest confirmations developed CPA for different reasons, with diseases such as GDV and trauma more commonly affecting MC dogs and respiratory disease more commonly affecting BC dogs. Defibrillation was more common in the MC dogs.",
+    "pub_types": [
+      "Journal Article"
+    ],
+    "mesh_terms": [],
+    "full_text_sections": null
+  },
+  {
+    "pmid": "38304475",
+    "title": "Effects of acute atrial fibrillation and cardioversion on left and right atrial pressures in a dog.",
+    "authors": [
+      "Allen Justin",
+      "Côté Étienne"
+    ],
+    "journal": "The Canadian veterinary journal = La revue veterinaire canadienne",
+    "year": "2024",
+    "doi": "",
+    "access_status": "abstract_only",
+    "access_source": "Europe PMC (has PDF)",
+    "abstract": "The occurrence of right-sided congestive heart failure (CHF) in dogs with left-sided heart disease is well-recognized, but its mechanisms are incompletely understood. A 12-year-old Maltese dog was admitted to the clinic for left atrial decompression to treat recurrent CHF due to severe myxomatous mitral valve disease (MMVD). Left atrial decompression was successful but atrial fibrillation (AF) occurred during the procedure. Electric cardioversion restored normal sinus rhythm (NSR) and the dog's recovery was uneventful. This sequence of events made it possible to study intracameral pressures individually in each atrium in a dog with naturally occurring MMVD during AF and again during NSR. Although pressures in both atria declined following cardioversion, the right atrial pressure declined to a greater degree. These findings indicated a disproportionate effect of AF on right atrial pressure. This difference was noteworthy given the long-standing clinical observation that dogs with MMVD have a higher prevalence of right-sided CHF when AF is present. Key clinical message: A dog with MMVD had a greater reduction in right atrial pressure than in left atrial pressure when its AF was cardioverted as part of a cardiac catheterization procedure. This observation proposed a mechanism for the well-known but unexplained observation that dogs with MMVD manifest right-sided CHF disproportionately more often when they have AF.",
+    "pub_types": [
+      "Case Reports",
+      "Journal Article",
+      "Research Support, Non-U.S. Gov't"
+    ],
+    "mesh_terms": [
+      "Dogs",
+      "Animals",
+      "Atrial Fibrillation",
+      "Electric Countershock",
+      "Atrial Pressure",
+      "Heart Valve Diseases",
+      "Heart Atria",
+      "Heart Failure",
+      "Dog Diseases"
+    ],
+    "full_text_sections": null
+  },
+  {
+    "pmid": "33129554",
+    "title": "Diagnosis and management of canine atrial fibrillation.",
+    "authors": [
+      "Pedro Brigite",
+      "Fontes-Sousa Ana Patrícia",
+      "Gelzer Anna R"
+    ],
+    "journal": "Veterinary journal (London, England : 1997)",
+    "year": "2020",
+    "doi": "10.1016/j.tvjl.2020.105549",
+    "access_status": "abstract_only",
+    "access_source": "Europe PMC",
+    "abstract": "Atrial fibrillation (AF) is the most common non-physiological arrhythmia in dogs and humans. Its high prevalence in both species and the impact it has on survival time and quality of life of affected patients, makes it a very relevant topic for medical research. In dogs, the diagnosis of AF is usually fairly straightforward, but optimal management can be complicated. Rate control is the most commonly used strategy; rhythm control can also be considered in very specific cases. Concurrent congestive heart failure is frequently identified, which represents an extra challenge for the clinicians. This article reviews the current recommendations for the diagnosis and management considerations of AF in dogs. Future perspectives, focusing on new drugs that may prevent development of AF based on recent discoveries, will also be discussed.",
+    "pub_types": [
+      "Journal Article",
+      "Review"
+    ],
+    "mesh_terms": [
+      "Animals",
+      "Anti-Arrhythmia Agents",
+      "Atrial Fibrillation",
+      "Dog Diseases",
+      "Dogs",
+      "Electric Countershock",
+      "Electrocardiography",
+      "Heart Failure",
+      "Heart Rate",
+      "Humans",
+      "Prognosis"
+    ],
+    "full_text_sections": null
+  },
+  {
+    "pmid": "33263542",
+    "title": "[Small animal cardiopulmonary -resuscitation (CPR) in general practice].",
+    "authors": [
+      "Hoehne S N",
+      "Kruppert A",
+      "Boller M"
+    ],
+    "journal": "Schweizer Archiv fur Tierheilkunde",
+    "year": "2020",
+    "doi": "10.17236/sat00280",
+    "access_status": "abstract_only",
+    "access_source": "Europe PMC",
+    "abstract": "Cardiopulmonary arrest (CPA) is the acute cessation of systemic perfusion and ventilation. It leads to a lack of tissue oxygen delivery and, if not addressed quickly, will inevitably cause death. Cardiopulmonary resuscitation (CPR) is the only available treatment for CPA and several opportunities exist to improve the veterinary team's resuscitation approach and optimize small animal CPR patient outcomes. In 2012, the Reassessment Campaign on Veterinary Resuscitation (RECOVER) initiative generated evidence-based clinical guidelines to form the basis for training and practice of CPR in dogs and cats. When employing an evidence-based, standardized approach to small animal CPR, return of spontaneous circulation can be achieved in up to 58% of patients and up to 7% of dogs and 19% of cats can be discharged from the veterinary hospital alive. Survival for dogs and cats that suffer CPA is best in patients that suffer a peri-anesthetic arrest, so high quality CPR in the anesthesia patient population is of utmost importance and expected to be the most rewarding. To ensure the best possible outcomes for any patient suffering from CPA and undergoing CPR, a comprehensive resuscitation strategy is necessary, that includes preventive and preparedness measures, basic life support (chest compressions and ventilation), advanced life support (optimization of the patient status by targeted drug therapy, cardiac rhythm monitoring, and defibrillation), and post-cardiac arrest critical care. This article summarizes the most important RECOVER CPR guidelines for the small animal practitioner.",
+    "pub_types": [
+      "Journal Article",
+      "Review"
+    ],
+    "mesh_terms": [
+      "Animals",
+      "Cardiopulmonary Resuscitation",
+      "Cats",
+      "Dogs",
+      "Heart Arrest",
+      "Hospitals, Animal"
+    ],
+    "full_text_sections": null
+  },
+  {
+    "pmid": "33263543",
+    "title": "The clinical practice of small animal CPR and compliance with RECOVER guidelines in Switzerland: an internet-based survey.",
+    "authors": [
+      "Kruppert A",
+      "Adamik K",
+      "Hoehne S N"
+    ],
+    "journal": "Schweizer Archiv fur Tierheilkunde",
+    "year": "2020",
+    "doi": "10.17236/sat00281",
+    "access_status": "abstract_only",
+    "access_source": "Europe PMC",
+    "abstract": "Objective: In 2012, the Reassessment Campaign on Veterinary Resuscitation (RECOVER) published the first evidence-based small animal CPR guidelines. Even though a RECOVER-based CPR approach has been shown to improve patient outcomes, guideline awareness and compliance is necessary to see such benefits. Our study aimed to characterize Swiss small animal veterinary CPR practices and assess their compliance with RECOVER guidelines. Methods: A nationwide, internet-based survey was conducted, and invitations distributed via Swiss veterinary society mailing lists. Questions covered respondents' demographics, CPR preparedness, Basic Life Support (BLS) and Advanced Life Support (ALS) techniques, and awareness of RECOVER guidelines. Percentages of group total (95% confidence interval) were calculated. Results: One-hundred and fifty respondents were grouped by level of expertise into board-certified specialists (BCS, n = 19), veterinarians with additional post-graduate training (PGT, n = 27), and general practitioners with (GPE, n = 30), and without emergency duties (GPG, n = 74). Of BCS respondents, 58% (36-77%) were familiar with the RECOVER guidelines, compared to 8% (4-17%) of GPG. Large disparities in preparedness, BLS, and ALS techniques emerged among the levels of expertise. Incompliance with preparedness measures varied from 89% (69-98%) in BCS to 100% (95-100%) in GPG and was predominantly due to failure to attend regular CPR training. BLS compliance ranged from 26% (12-49%) in BCS to 5% (2-13%) in GPG, and incompliance was mostly characterized by targeting lower than recommended chest compression rates. ALS compliance varied from 21% (9-43%) in BCS to 0% (0-5%) in GPG and was compromised by limitations in the resuscitation environment such as lacking access to a defibrillator, monitoring equipment, and rescue drugs. Conclusion: Awareness of RECOVER guidelines in Switzerland is acceptable in specialists, but inadequate among general practitioners and CPR practices are largely not in agreement with RECOVER guidelines. An educational strategy is needed to improve Swiss small animal CPR knowledge and performance.",
+    "pub_types": [
+      "Journal Article"
+    ],
+    "mesh_terms": [
+      "Animals",
+      "Guideline Adherence",
+      "Guidelines as Topic",
+      "Internet",
+      "Surveys and Questionnaires",
+      "Switzerland",
+      "Veterinary Medicine"
+    ],
+    "full_text_sections": null
+  }
+]

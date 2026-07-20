@@ -1,0 +1,21 @@
+# 同义词表模板 — 复制此文件到项目根，按领域填写
+# 文件名: synonyms.yaml
+#
+# 每个条目一个知识点，变体按"精确→模糊"排列。
+# en: 英文变体（用于 grep 英文源材料）
+# zh: 中文变体（用于 grep 中文源材料）
+# note: 可选，给人类审核者看的备注
+
+# ── 示例：麻醉学领域 ──
+# hypotension:
+#   en: [hypotension, hypotensive, "low blood pressure", "MAP <", "MAP decrease",
+#        "blood pressure decrease", "decreased MAP"]
+#   zh: [低血压, 血压下降, 血压降低, 低血压症, 血压骤降]
+#   note: "MAP < 60 mmHg 持续 > 3min 为临床阈值"
+#
+# propofol:
+#   en: [propofol, "2,6-diisopropylphenol", Diprivan, Propofol-Lipuro, PropoFlo]
+#   zh: [丙泊酚, 异丙酚, 得普利麻, 丙泊酚脂质]
+#   note: "GABAa 受体激动剂，常用诱导剂量 4-6 mg/kg IV（犬）"
+
+# ── 请在下方填写你的领域术语 ──

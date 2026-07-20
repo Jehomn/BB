@@ -1,0 +1,5 @@
+/Lib/
+/share/
+/DLLs/
+*.pyc
+__pycache__/
