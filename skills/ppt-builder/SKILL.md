@@ -29,15 +29,9 @@ Source Agent (pua:p7)          Comparison Agent (pua:p7)         Draft Agent (pu
   ↓                                ↓                                ↓
 输出：该章知识点卡片              输出：差异报告                   输出：内容稿（含引证）
                                                                      ↓
-                                                            Humanizer Agent (pua:p7)
-                                                                     ↓
-                                                             加载 humanizer skill → 去 AI 写作痕迹
-                                                                     ↓
-                                                             输出：人味化内容稿
-                                                                     ↓
                                                               Verifier (pua:verifier)
                                                                      ↓
-                                                              自检清单核验 → 不通过打回 Humanizer
+                                                              16 条自检清单核验 → 不通过打回 Draft
                                                                      ↓
                                                               你审阅（最终质量闸门）
 ```
@@ -46,11 +40,10 @@ Source Agent (pua:p7)          Comparison Agent (pua:p7)         Draft Agent (pu
 
 | Agent | 输入 | 输出 | 禁做 |
 |-------|------|------|------|
-| Source Agent | vault 笔记 + PDF 章节范围 | 知识点卡片（每条带 [来源 章.节] + 附图标记：有图则录 `[图 章.节/p.页]`，无图标 `[无图]`）| 不跨书比对，不写幻灯片 |
+| Source Agent | PDF 原文 + vault 笔记导航 | 知识点卡片（每条带 [来源 章.节/p.页] + 附图标记：有图则录 `[图 章.节/p.页]`，无图标 `[无图]`）| 不跨书比对，不写幻灯片 |
 | Comparison Agent | 多个 Source Agent 的输出 + vault 交叉引用 | 差异报告（标 [差异] + 证据分级 ●●●/●●○/●○○ + 相关性标注）| 不生成新内容，不裁决对错 |
-| Draft Agent | 知识点卡片（含附图标记）+ 差异报告 + vault `#digested` 笔记 | Markdown 内容稿（每页一张卡片，含引证角标 + 配图方案）| 不自行决定引用——必须来自上游输入 |
-| Humanizer Agent | Draft Agent 输出的内容稿 | 人味化内容稿（去除 AI 写作痕迹，保留事实/引证/数字）| 不改事实、不删引证、不改数字、不改术语——只修文风和句式 |
-| Verifier | 人味化内容稿 + 自检清单 | 逐条通过/不通过，标位置 | 不修改内容，只标记 |
+| Draft Agent | 知识点卡片（含附图标记）+ 差异报告 | Markdown 内容稿（每页一张卡片，含引证角标 + 配图方案）| 不自行决定引用——必须来自上游输入 |
+| Verifier | 内容稿 + 16 条自检清单（含五维深度审查） | 逐条通过/不通过，标位置 | 不修改内容，只标记 |
 
 ### 证据相关性评估（Comparison Agent 执行）
 
@@ -91,7 +84,7 @@ Source Agent (pua:p7)          Comparison Agent (pua:p7)         Draft Agent (pu
 
 ### 验证闸门
 
-Draft Agent 输出内容稿后，先经 Humanizer Agent 过滤 AI 写作痕迹（加载 `humanizer` skill），再由 Verifier Agent 逐条核验以下清单。**不通过 → 打回 Humanizer Agent 修复 → 再核。** 核到全绿才呈现给用户。
+Draft Agent 输出内容稿后，Verifier Agent 逐条核验以下清单。**不通过 → 打回 Draft Agent 修复 → 再核。** 核到全绿才呈现给用户。
 
 | # | 检查项 | 不通过标准 |
 |---|--------|-----------|
@@ -99,12 +92,18 @@ Draft Agent 输出内容稿后，先经 Humanizer Agent 过滤 AI 写作痕迹�
 | 2 | 数字精度 | 出现"较高""明显""大量""一般"等模糊词 |
 | 3 | 差异标注 | 多源数据冲突但未标 `[差异]`（两边都列，不捏造共识）|
 | 4 | 缩写展开 | 缩写首次出现未写"中文译名（English Full Name, ABBR）" |
-| 5 | 引号规范 | 中文语境出现 ASCII `"` 而非「」 |
+| 5 | 引号规范 | 中文语境使用弯双引号 ""（U+201C/U+201D），不用 ASCII 直引号 `"` 或日式角括号「」 |
 | 6 | 孤儿行 | 文字行末尾挂 1–4 个字 |
-| 7 | vault 溯源 | 每条关键事实可在 vault `#digested` 笔记中找到对应原文 |
+| 7 | PDF 溯源 | 每条关键事实可在 PDF 原文中找到逐字对应的出处。Vault 笔记写了但 PDF 找不到原文支撑的 → 不采纳。追溯终点是 PDF 页码，不是 vault 笔记段落（🔒 死命令，详见 `pdf-primary-source-rule`）|
 | 8 | 禁止句式 | 出现"值得注意的是""大量研究表明""在临床实践中" |
 | 9 | 相关性标注 | 引用 `[间接]` / `[弱相关]` 证据但未在正文点明局限；不可落地的可展示但必须标 `[不可落地·学界常提]` 并简述原因 |
 | 10 | 图片来源 | 使用未标注来源的非公开版权图；或试图自绘示意图而非留占位页 |
+| **11** | **场景锚定** | 论证从抽象概念起手而非从具体临床时刻起手。判定：能否在2秒内想象出这个场景发生在哪间手术室、什么动物、哪个时间点（🔒 详见工程手册 §〇.五）|
+| **12** | **机制纵深** | 只有结论无因果链。判定：能否顺着因果链在 PDF 原文里找到每一步的出处。单层因果（A→B）不够，需 ≥3 层（🔒 详见工程手册 §〇.五）|
+| **13** | **证据锚定** | 数据无来源或无方法或无局限。判定：能否回答"这个数字从哪来、什么研究、什么条件、局限在哪"（🔒 详见工程手册 §〇.五）|
+| **14** | **认知张力** | 内容停留在确认听众已有认知，无挑战默认假设。判定：能否让一个 5 年经验的麻醉医生看完产生"这个我以前没想过"（🔒 详见工程手册 §〇.五）|
+| **15** | **临床可操作性** | 论证到结论就停了，缺一个"明天能做什么"的动作。判定：能否在麻醉记录单上写下一个新的检查项或流程节点（🔒 详见工程手册 §〇.五）|
+| **16** | **设问质量** | 设问答案不足 3 层因果链、或答案不含具体数字、或以"你"为主语、或设在论证链起点而非终点。一两句话能回答的问题不值得显性设问（🔒 铁律，详见工程手册 §〇.五）|
 
 ### 并行模块执行
 
@@ -112,13 +111,12 @@ Draft Agent 输出内容稿后，先经 Humanizer Agent 过滤 AI 写作痕迹�
 
 ```
 母 Agent（你直接控制，不写代码）
-├── 模块1: Source → Comparison → Draft → Humanizer → Verifier → 你审
-├── 模块2: Source → Comparison → Draft → Humanizer → Verifier → 你审（与模块1并行）
-└── 模块3: Source → Comparison → Draft → Humanizer → Verifier → 你审（与1、2并行）
+├── 模块1: Source → Comparison → Draft → Verifier → 你审
+├── 模块2: Source → Comparison → Draft → Verifier → 你审（与模块1并行）
+└── 模块3: Source → Comparison → Draft → Verifier → 你审（与1、2并行）
 ```
 
 - 用 `Agent` 工具派发 `pua:p7` 子 Agent，`run_in_background: true`
-- Humanizer Agent 加载 `humanizer` skill，仅修文风不改事实
 - 每个模块的 Prompt 必须包含：源书范围 + vault 笔记路径 + 输出目标（知识点卡片 / 差异报告 / 内容稿 / 人味化内容稿）
 - 模块间无依赖关系，完全并行
 
@@ -386,7 +384,31 @@ Each build cycle: `node build.js` → open PPTX → review → fix 2-3 issues �
 - `shrinkText: true` 会压制自定义行距和段距
 - 段间分隔 fontSize 建议为正文的 0.8 倍
 
-### 进度条
+### 进度条（🔒 铁律）
+
+`progress` 值为 0-1 的进度条填充比例，用于渲染每页的进度条段宽。
+
+**绝对禁止在数据对象中硬编码 `progress` 值。** 进度条必须由构建管道动态计算：`(pageIndex + 1) / totalPagesInAct`。
+
+这个错误已连续发生 3 次（麻醉新规 v3 → 困难气道 → 麻醉风险评估），每次都因为「最后一页 progress 不是 1.0」导致进度条段留白。根本原因是把进度计算放在了数据层（每个 slide 对象中手动写 progress 数字），而非管道层（构建时自动注入）。
+
+**强制模板模式（所有新 build.js 必须使用）：**
+
+```js
+// ✅ 正确：构建管道动态注入 progress
+function buildAct(pptx, actIdx, actData) {
+  actData.forEach((data, i) => {
+    data.progress = (i + 1) / actData.length;
+    addSlide(data);
+  });
+}
+
+// ❌ 错误：数据层硬编码 progress
+{ t:'content', progress: 0.5, ... }
+```
+
+**Verifier 检查项**：build.js 数据数组中不得出现 `progress:` 字段。出现即打回。
+
 - `pim` 是 0-based 模块内页码，`pim / pages` 导致首页 0 填充、末页非满色。**必须用 `(pim + 1) / pages`**
 - `MOD_DEFS.pages` 必须与模块实际 slide 数量对齐，否则段宽比例失真
 - 父库模板内部调用裸名 `addProgressBar`，monkey-patch `T.addProgressBar` **无效**——必须自写模板函数
@@ -418,6 +440,35 @@ Each build cycle: `node build.js` → open PPTX → review → fix 2-3 issues �
 ### 构建与文件
 - WPS 云盘锁 `.pptx` 文件时用时间戳回退文件名
 - 临时 `.pptx` 不提交 git
+
+## Lessons Learned (2026-07 麻醉风险评估课件项目)
+
+### 临床参数写法
+每个数值同时给测量方法 + 具体数字 + 单位 + 参考范围。不是「血压下降」而是「NIBP 收缩压从 135 mmHg 降至 68 mmHg，MAP 从 95 降到 45」。血压首次出现须含 SBP/MAP/DBP + NIBP/IBP。
+
+### 数据与模板分离
+幻灯片数据放 `data.js`（`module.exports = { actAData, actBData, ... }`），模板/管道/令牌放 `build.js`（`require("./data.js")`）。编辑内容只碰 data.js。
+
+### 字号
+bodySize 只用 16（正常）和 14（密集）。超出单页就拆，不缩字号。title 26pt、ref 8.5pt、页码 9pt、进度条 10pt。
+
+### 进度条
+绝对不在 data.js 里写 `progress:` 字段。管道层 `addSlideWithProgress` 动态注入 `(idx + 1) / total`，末页自动满填充。这个坑踩了三次——麻醉新规、困难气道、本项目——每次都是硬编码 progress 导致末页留白。
+
+### 引用角标
+正文用普通数字 `[1]`，`splitRefs()` 正则 `/\[[1-8]\]|⁺/g` 匹配后以 pptxgenjs `{ superscript: true }` 渲染。不用 Unicode 上标字符（¹²³ 叠 ppt superscript 二次缩放畸形）。K⁺ 的 ⁺ 同理：用普通 `+` 加 superscript，不用 Unicode `⁺`（间距失控）。底部引用 `join("\n")` 每条独立成行，高度 `min(0.55, refCount * 0.18)`。
+
+### 引号
+中文用弯双引号 ""（U+201C/U+201D），不用「」或 ASCII `"`。
+
+### 内容厚度
+每个知识点拆 2-3 页：场景 → 机制/证据 → 临床含义。源材料的原文论证直接翻译嵌入——不只引结论，引论证过程。页面上是完整的临床论证段落，不是概念标签。60 分钟 ≈ 45-50 页内容。
+
+### 措辞
+用临床机制描述替代比喻——「麻醉诱导通过心肌抑制和血管扩张打破了代偿平衡」而非「掀开了代偿的面纱」。B 幕场景客观叙事，全篇「你」控制在 5 个以内（仅 C 幕反问句）。红字 `{{}}` 标的是临床判断，不是反问或感叹。
+
+### Speaker notes
+只在有超出 slide 文字的讲授指导时才写。红字已强调的内容不加 notes。总结/排版指导不属于 notes。
 
 ## Reference
 

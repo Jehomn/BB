@@ -64,7 +64,7 @@ def load_known_topics(path: str) -> list[str]:
         return [line.strip() for line in content.split("\n") if line.strip()]
 
 
-def query_llm(skeleton: str, known_topics: list[str], api_key: str, model: str) -> str:
+def query_llm(skeleton: str, known_topics: list[str], api_key: str, model: str, base_url: str) -> str:
     """让 LLM 扫描文本骨架，找出已知列表未覆盖的内容。"""
     if not skeleton.strip():
         return "（文本为空，无法分析）"
@@ -95,7 +95,7 @@ def query_llm(skeleton: str, known_topics: list[str], api_key: str, model: str) 
 文本骨架：
 {skeleton[:8000]}"""
 
-    client = OpenAI(api_key=api_key, base_url="https://open.bigmodel.cn/api/paas/v4/")
+    client = OpenAI(api_key=api_key, base_url=base_url)
     response = client.chat.completions.create(
         model=model,
         messages=[{"role": "user", "content": prompt}],
@@ -108,15 +108,18 @@ def main():
     parser = argparse.ArgumentParser(description="反证校验 — 检索遗漏知识点")
     parser.add_argument("input", help="评分 1 的书的 pdftotext 文本文件")
     parser.add_argument("--known", required=True, help="已知知识点列表（JSON 数组或每行一个的文本文件）")
-    parser.add_argument("--api-key", default=None, help="LLM API key（默认读 ZHIPU_API_KEY 环境变量）")
+    parser.add_argument("--api-key", default=None, help="LLM API key（默认读 LLM_API_KEY 或 ZHIPU_API_KEY 环境变量）")
+    parser.add_argument("--base-url", default=None, help="LLM API base URL（默认读 LLM_BASE_URL 环境变量，回退智谱）")
     parser.add_argument("--model", default="glm-4.6", help="LLM 模型名（默认 glm-4.6，骨架扫描不需要 VL）")
     parser.add_argument("--no-llm", action="store_true", help="只输出文本骨架，不调 LLM（调试用）")
     args = parser.parse_args()
 
-    api_key = args.api_key or os.environ.get("ZHIPU_API_KEY")
+    api_key = args.api_key or os.environ.get("LLM_API_KEY") or os.environ.get("ZHIPU_API_KEY")
     if not api_key and not args.no_llm:
-        print("错误：需要 API key。设置 ZHIPU_API_KEY 环境变量或用 --api-key", file=sys.stderr)
+        print("错误：需要 API key。设置 LLM_API_KEY 或 ZHIPU_API_KEY 环境变量，或用 --api-key", file=sys.stderr)
         sys.exit(1)
+
+    base_url = args.base_url or os.environ.get("LLM_BASE_URL") or "https://open.bigmodel.cn/api/paas/v4/"
 
     try:
         with open(args.input, "r", encoding="utf-8", errors="replace") as f:
@@ -140,7 +143,7 @@ def main():
         print(skeleton[:5000])
         print("```")
     else:
-        result = query_llm(skeleton, known, api_key, args.model)
+        result = query_llm(skeleton, known, api_key, args.model, base_url)
         print(result)
 
 

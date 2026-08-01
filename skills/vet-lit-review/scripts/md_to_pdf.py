@@ -194,8 +194,8 @@ def make_card(text, styles, bg=CARD_BG, border_color=CARD_BORDER):
 
 
 def make_key_finding(text, styles):
-    """Create the one-line conclusion box."""
-    text = text.replace('**结论概览：**', '').replace('**结论概览:**', '').replace('**一句话结论：**', '').replace('**一句话结论:**', '').strip()
+    """Create the summary-title box (概括标题)."""
+    text = text.replace('**概括标题：**', '').replace('**概括标题:**', '').replace('**结论概览：**', '').replace('**结论概览:**', '').replace('**一句话结论：**', '').replace('**一句话结论:**', '').strip()
     text = re.sub(r'\*\*(.+?)\*\*', r'<b>\1</b>', text)
     text = normalize_super_sub(text)
     p = Paragraph(text, styles['key_finding'])
@@ -402,8 +402,8 @@ def parse_and_build(lines, styles):
             i += 1
             continue
 
-        # ── 结论概览 / 一句话结论 (special bold-only line) ──
-        if (stripped.startswith('**结论概览：') or stripped.startswith('**一句话结论：')) and not stripped.startswith('>'):
+        # ── 概括标题 / 结论概览 / 一句话结论 (special bold-only line) ──
+        if (stripped.startswith('**概括标题：') or stripped.startswith('**结论概览：') or stripped.startswith('**一句话结论：')) and not stripped.startswith('>'):
             yield from flush_blockquote()
             yield from flush_table()
             yield from flush_body()
