@@ -382,11 +382,16 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File "C:\Users\realj\.claude\
 
 ### 缩写规范（用户强制原则）
 
-- 首次出现：**"缩写ABC（英文全称。中文译名）"**。示例："BOAS（Brachycephalic Obstructive Airway Syndrome。短头阻塞性气道综合征）"
-- 英文全称与中文译名之间用句号分隔，不写逗号
+**括号内分隔符一律用中文逗号 `，`，不用句号。** 本技能产出属「研究报告」场景：
+
+- 首次出现：**`ABBR（English Full Name, 中文译名）`**。示例：`BOAS（Brachycephalic Obstructive Airway Syndrome, 短头阻塞性气道综合征）`
+- 缩写在前、英文全称居中、中文译名在末——理由是**缩写是检索锚点**（2026-08-08 用户原话：「根本上是在解释缩写，所以你应该缩写在左」）
 - 第二次及之后：全部保留缩写，不再展述
 - 标题中也遵守：标题首次出现的缩写同样展述，后文标题可沿用缩写
-- 不预设读者知道任何缩写，哪怕兽医通用缩写（如 CBC、NSAID）也须首次展述
+- 通用医学缩写（IV、ECG、TPR 等）在中文语境中可不展开；**兽医专有缩写（VCPR、SOVMR、MAOR 等）必须展开**
+- 交付前全文扫描，确认所有缩写的首次出现处已按本节格式定义
+
+（2026-09-20 修订：此前本节写的是「用句号分隔」，与全局 `~/.claude/CLAUDE.md` 的现行规范冲突，已改正。）
 
 ### 禁区
 
@@ -449,5 +454,5 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File "C:\Users\realj\.claude\
 - [ ] 仅获取摘要的文献，摘要是否完整（非截断）且标注了获取限制？
 - [ ] 所有文献标注了PMID/DOI？
 - [ ] 检索时间和平台是否注明？
-- [ ] 所有缩写首次出现是否用"缩写ABC（英文全称。中文译名）"格式展述，第二次及之后保留缩写？
+- [ ] 所有缩写首次出现是否用 `ABBR（English Full Name, 中文译名）` 格式展述（逗号分隔，非句号），第二次及之后保留缩写？
 - [ ] PDF排版美观、矩阵表可读、证据强度标记清晰？
