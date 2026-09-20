@@ -3,3 +3,11 @@
 /DLLs/
 *.pyc
 __pycache__/
+
+# 运行产物（检索/提取的中间文件，不属于技能本体）
+papers_*.json
+cit_meta.txt
+cite_meta.txt
+cochrane.txt
+vet_extract.txt
+human_extract.txt

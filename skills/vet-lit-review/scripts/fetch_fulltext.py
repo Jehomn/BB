@@ -313,8 +313,13 @@ def _append_section(sections, key, content):
 
 # ── Europe PMC ──
 
-def check_europe_pmc(pmid):
-    """Check Europe PMC for OA full text availability."""
+def fetch_epmc_fulltext(pmid):
+    """Fetch full text from Europe PMC via fullTextXML (JATS format).
+
+    More reliable than NCBI's pmc/articles/{id}/?report=xml endpoint,
+    which frequently returns parse-unfriendly output. Returns the same
+    sections dict shape as parse_pmc_sections, or None if not available.
+    """
     url = f"{EUROPE_PMC_BASE}/search?query=ext_id:{pmid}&format=json&resultType=core"
     try:
         with urllib.request.urlopen(url, timeout=30) as resp:
@@ -322,25 +327,16 @@ def check_europe_pmc(pmid):
         results = data.get("resultList", {}).get("result", [])
         if not results:
             return None
-        paper = results[0]
-        result = {"source": "Europe PMC"}
-
-        if paper.get("hasPDF") == "Y":
-            result["has_pdf"] = True
-
-        ft_urls = paper.get("fullTextUrlList", {}).get("fullTextUrl", [])
-        if ft_urls:
-            result["full_text_urls"] = [
-                u.get("url") for u in ft_urls
-            ]
-
-        pmcid = paper.get("pmcid")
-        if pmcid:
-            result["pmcid"] = pmcid
-
-        return result if (result.get("has_pdf") or result.get("full_text_urls")) else None
+        pmcid = results[0].get("pmcid")
+        if not pmcid:
+            return None
+        xml_url = f"{EUROPE_PMC_BASE}/{pmcid}/fullTextXML"
+        req = urllib.request.Request(xml_url, headers={"User-Agent": "VetLitReview/1.0"})
+        with urllib.request.urlopen(req, timeout=60) as resp2:
+            xml_text = resp2.read().decode("utf-8", errors="replace")
+        return parse_pmc_sections(xml_text, pmcid)
     except Exception as e:
-        print(f"  [Europe PMC error] {e}", file=sys.stderr)
+        print(f"  [Europe PMC fulltext error] {e}", file=sys.stderr)
     return None
 
 
@@ -350,9 +346,10 @@ def check_unpaywall(doi, email=""):
     """Check Unpaywall API for legal open access versions."""
     if not doi:
         return None
-    # Always include an email — Unpaywall requires it for polite access
+    # Unpaywall requires a real email address for polite access;
+    # example.com-style placeholders get rejected with HTTP 422.
     if not email:
-        email = "vet-lit-review@example.com"
+        return None
     params = urllib.parse.urlencode({"email": email})
     url = f"{UNPAYWALL_BASE}/{doi}?{params}"
     try:
@@ -509,12 +506,14 @@ def main():
             ft_sections = sections
             access_source = f"PMC ({sections.get('pmc_id', '?')})"
 
-        # 2. Try Europe PMC (informational — we can't easily DL full text)
+        # 2. Try Europe PMC full text XML (JATS, same shape as PMC sections)
         if ft_status != "full_text":
-            print(f"  Checking Europe PMC...", file=sys.stderr)
-            epmc = check_europe_pmc(pmid)
-            if epmc:
-                access_source = f"Europe PMC (has PDF)" if epmc.get("has_pdf") else "Europe PMC"
+            print(f"  Checking Europe PMC full text...", file=sys.stderr)
+            sections = fetch_epmc_fulltext(pmid)
+            if sections and _has_content(sections):
+                ft_status = "full_text"
+                ft_sections = sections
+                access_source = f"Europe PMC ({sections.get('pmc_id', '?')})"
 
         # 3. Try Unpaywall
         doi = paper.get("doi", "")
@@ -558,6 +557,17 @@ def main():
     print(f"\n[DONE] {len(results)} papers: {ft_count} full text, {ab_count} abstract-only",
           file=sys.stderr)
     print(f"Output: {args.output}", file=sys.stderr)
+    if ab_count:
+        # abstract_only means THIS script could not extract text from PMC/Europe PMC.
+        # It does NOT mean no PDF exists — publisher pages and PoW-gated endpoints
+        # are out of scope here. Never report it as "unavailable".
+        print(
+            f"\n[!] {ab_count} paper(s) fell back to abstract-only.\n"
+            f"    This means no XML full text was reachable via PMC/Europe PMC —\n"
+            f"    it does NOT mean the paper is unavailable. Before concluding that,\n"
+            f"    run scripts/fetch_pdf.py, which reads publisher access badges and\n"
+            f"    handles PoW-gated / JS-loaded PDF endpoints.",
+            file=sys.stderr)
 
     if args.text:
         render_text_output(results)

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-兽医学文献快报 Markdown → PDF 转换脚本 (ReportLab版)
+兽医文献研究报告 Markdown → PDF 转换脚本 (ReportLab版)
 用法: python md_to_pdf.py input.md output.pdf --title "报告标题" --author "作者"
 依赖: pip install reportlab
 """
@@ -286,7 +286,7 @@ def header_footer(canvas, doc, report_title):
     if doc.page > 1:
         canvas.setFont(_FONT_NAME, 8)
         canvas.setFillColor(LIGHT_GRAY)
-        canvas.drawString(20*mm, A4[1] - 18*mm, f"{report_title}  |  兽医学文献快报")
+        canvas.drawString(20*mm, A4[1] - 18*mm, f"{report_title}  |  兽医文献研究报告")
         canvas.line(20*mm, A4[1] - 20*mm, A4[0] - 20*mm, A4[1] - 20*mm)
         canvas.drawCentredString(A4[0]/2, 15*mm, f"第 {doc.page} 页")
         canvas.setStrokeColor(DARK_GREEN)
@@ -450,15 +450,63 @@ def parse_and_build(lines, styles):
 # ── Main ──
 
 def extract_meta(lines):
-    """Extract metadata line (starts with > and contains 检索)."""
+    """Extract metadata line (starts with > and contains 检索).
+    去掉 Markdown 加粗标记，避免 ** 星号原样印到封面。"""
     for line in lines:
         s = line.strip().lstrip('>').strip()
         if any(kw in s for kw in ['检索时间', '检索平台', '研究类型']):
-            return s
+            return re.sub(r'：\s+', '：', s.replace('**', ''))
     return ''
 
 
-def md_to_pdf(input_path, output_path, title="兽医学文献快报", author="Jehomn Bea"):
+# 报告类型关键词 → 封面副标题（按序匹配，先「快报」后「研究报告」）
+SUBTITLE_ALIASES = (
+    ('快报', '兽医学文献快报'),
+    ('研究报告', '兽医文献研究报告'),
+)
+
+
+def _subtitle_from(text):
+    """把一段文本按类型关键词归一成封面副标题；无匹配返回空串。"""
+    for key, val in SUBTITLE_ALIASES:
+        if key in text:
+            return val
+    return ''
+
+
+def extract_subtitle(lines, h1='', stem='', default="兽医文献研究报告"):
+    """封面副标题按优先级取：
+    MD 声明行（**副标题：**X / > 研究类型：X / 裸加粗类型行 **X**）> H1 > 文件名。
+    每一级都按关键词归一；三级全无匹配才用 default。"""
+    seen_h1 = False
+    for line in lines:
+        s = line.strip()
+        if not seen_h1:
+            if s.startswith('# ') and not s.startswith('## '):
+                seen_h1 = True
+            continue
+        if s.startswith('## '):
+            break
+        if s.startswith('**副标题：**'):
+            body = s[len('**副标题：**'):].strip()
+        elif s.startswith('>') and '研究类型：' in s:
+            body = s.split('研究类型：', 1)[1].strip()
+        elif s.startswith('**') and s.endswith('**') and s.count('**') == 2:
+            body = s[2:-2].strip()
+        else:
+            continue
+        got = _subtitle_from(body.rstrip('*').strip())
+        if got:
+            return got
+    # 无显式声明时看 H1（如「# 猫心包积液文献快报」）与文件名（如「…_文献快报.md」）
+    for candidate in (h1, stem):
+        got = _subtitle_from(candidate or '')
+        if got:
+            return got
+    return default
+
+
+def md_to_pdf(input_path, output_path, title="兽医文献研究报告", author="Jehomn Bea"):
     with open(input_path, 'r', encoding='utf-8') as f:
         md_text = f.read()
 
@@ -474,13 +522,16 @@ def md_to_pdf(input_path, output_path, title="兽医学文献快报", author="Je
             report_title = s[2:].strip()
             break
 
+    report_subtitle = extract_subtitle(
+        all_lines, h1=report_title, stem=os.path.basename(input_path))
+
     # ── Build story ──
     story = []
 
     # Cover page
     story.append(Spacer(1, 60*mm))
     story.append(Paragraph(report_title, styles['cover_title']))
-    story.append(Paragraph("兽医学文献快报", styles['cover_subtitle']))
+    story.append(Paragraph(report_subtitle, styles['cover_subtitle']))
     if meta_line:
         story.append(Paragraph(meta_line, styles['cover_meta']))
     story.append(HRFlowable(width="50%", thickness=1.5, color=DARK_GREEN, spaceAfter=6*mm))
@@ -520,13 +571,13 @@ def md_to_pdf(input_path, output_path, title="兽医学文献快报", author="Je
 
 
 def main():
-    parser = argparse.ArgumentParser(description="兽医学文献快报 Markdown → PDF")
+    parser = argparse.ArgumentParser(description="兽医文献研究报告 Markdown → PDF")
     parser.add_argument("input")
     parser.add_argument("output")
     parser.add_argument("--title", default=None)
     parser.add_argument("--author", default="Jehomn Bea")
     args = parser.parse_args()
-    md_to_pdf(args.input, args.output, title=args.title or "兽医学文献快报", author=args.author)
+    md_to_pdf(args.input, args.output, title=args.title or "兽医文献研究报告", author=args.author)
 
 
 if __name__ == "__main__":
